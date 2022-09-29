@@ -33,6 +33,8 @@ function createData(){
         }else{
             textmsg("error","Record is Not added");
         }
+    }else {
+        textmsg("error","Please fill book information to add");
     }
 }
 
@@ -52,11 +54,16 @@ function updateData(){
     $bookpublisher = checktextvalues('book-publisher');
     $bookprice = checktextvalues('book-price');
 
-    $sql = "UPDATE books SET book_name='$bookname',book_publisher='$bookpublisher',book_price='$bookprice' WHERE id='$id'";
-    if(mysqli_query($GLOBALS['con'],$sql)){
-        textmsg("success", "Record updated succesfully");
+    if($bookname && $bookpublisher && $bookprice){
+
+        $sql = "UPDATE books SET book_name='$bookname',book_publisher='$bookpublisher',book_price='$bookprice' WHERE id='$id'";
+        if(mysqli_query($GLOBALS['con'],$sql)){
+            textmsg("success", "Record updated succesfully");
+        }else{
+            textmsg("error", "Unable to update record");
+        }
     }else{
-        textmsg("error", "Unable to update record");
+        textmsg("error","Please fill book information to update");
     }
 }
 
@@ -110,7 +117,7 @@ function checktextvalues($value){
 }
 
 function textmsg($class,$msg){
-    $msg = "<h6 class='$class'>$msg</h6>";
+    $msg = "<h6 class='$class animated-left'>$msg</h6>";
     echo $msg;
 }
 
